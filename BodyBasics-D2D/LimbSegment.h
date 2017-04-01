@@ -1,31 +1,37 @@
 #ifndef LIMBSEGMENT_H
 #define LIMBSEGMENT_H
 
-class LimbJoint;
+#include "support.h"
+
+enum BodyPart { L_LOWER_ARM, R_LOWER_ARM, L_UPPER_ARM, R_UPPER_ARM };
 
 class LimbSegment
 {
 public:
 
-	LimbSegment(LimbJoint* tail, LimbJoint* head)
-		: m_tail(tail), m_head(head)
+	LimbSegment(BodyPart id, Coord start, Coord end)
+		: m_id(id), m_start(start), m_end(end)
+	{ }
+
+	BodyPart id()
 	{
-	
+		return m_id;
 	}
 
-	LimbJoint* getJointTail()
+	Coord start()
 	{
-		return m_tail;
+		return m_start;
 	}
 
-	LimbJoint* getJointHead()
+	Coord end()
 	{
-		return m_head;
+		return m_end;
 	}
 
 private:
-	LimbJoint* m_tail;
-	LimbJoint* m_head;
+	BodyPart m_id;
+	Coord m_start;
+	Coord m_end;
 };
 
 #endif
