@@ -14,6 +14,8 @@ public:
 
 	~LimbCollection();
 
+	int angleOf(JointPart myJoint);
+
 	void saveAngles(JointPart jnt);
 
 private:

@@ -365,11 +365,11 @@ void CBodyBasics::ProcessBody(INT64 nTime, int nBodyCount, IBody** ppBodies)
                         {
 							// Start of LA Hacks Code
 
-							Joint *jointArray[JointPart::NUM_JOINTS] = { &joints[4], &joints[5], &joints[6], &joints[8], &joints[9], &joints[10] };
+							Joint *jointArray[JointPart::NUM_JOINTS] = { &joints[4], &joints[5], &joints[6], &joints[8], &joints[9], &joints[10], &joints[1], &joints[20] };
 
 							LimbCollection myLimbs(jointArray);
 
-							myLimbs.saveAngles(JointPart::L_ELBOW_JOINT);
+							myLimbs.saveAngles(JointPart::R_SHOULDER_JOINT);
 
 							// End of LA Hacks Code
 

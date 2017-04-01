@@ -3,9 +3,9 @@
 
 #include <string>
 
-enum BodyPart { L_LOWER_ARM, R_LOWER_ARM, L_UPPER_ARM, R_UPPER_ARM, NUM_BODYPARTS };
+enum BodyPart { L_LOWER_ARM, R_LOWER_ARM, L_UPPER_ARM, R_UPPER_ARM, TORSO, NUM_BODYPARTS };
 
-enum JointPart { L_SHOULDER_JOINT, L_ELBOW_JOINT, L_WRIST_JOINT, R_SHOULDER_JOINT, R_ELBOW_JOINT, R_WRIST_JOINT, NUM_JOINTS };
+enum JointPart { L_SHOULDER_JOINT, L_ELBOW_JOINT, L_WRIST_JOINT, R_SHOULDER_JOINT, R_ELBOW_JOINT, R_WRIST_JOINT, SPINE_MID, SPINE_SHOULDER, NUM_JOINTS };
 
 class LimbSegment;
 
@@ -34,6 +34,8 @@ private:
 };
 
 float dotProduct(Coord &left, Coord &right);
+
+float crossProduct(Coord &left, Coord &right);
 
 float magnitude(Coord &crd);
 
