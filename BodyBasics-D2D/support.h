@@ -1,6 +1,8 @@
 #ifndef SUPPORT_H
 #define SUPPORT_H
 
+#include <string>
+
 class LimbSegment;
 
 /*
@@ -10,5 +12,11 @@ Returns the angle between the two segments where the vectors are both oriented w
 the heads pointing away from the torso.
 */
 float angleBetweenLimbs(LimbSegment& pLimb, LimbSegment& cLimb);
+
+/*
+Writes msg to a debug.txt in debugging
+*/
+void writeToFile(std::string msg);
+
 
 #endif

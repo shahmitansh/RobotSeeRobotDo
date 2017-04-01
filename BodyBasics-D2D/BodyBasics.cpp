@@ -8,6 +8,7 @@
 #include <strsafe.h>
 #include "resource.h"
 #include "BodyBasics.h"
+#include "kinect.h"
 
 // LA Hack Inclusions
 
@@ -365,14 +366,6 @@ void CBodyBasics::ProcessBody(INT64 nTime, int nBodyCount, IBody** ppBodies)
                         {
                             for (int j = 0; j < _countof(joints); ++j)
                             {
-
-								std::ofstream myfile("example.txt");
-								if (myfile.is_open())
-								{
-									myfile << "Joint number is: " + j + std::to_string(jointPoints[j].x) + ", y-pos: " + std::to_string(jointPoints[j].y) << std::endl;
-									myfile.close();
-								}
-
                                 jointPoints[j] = BodyToScreen(joints[j].Position, width, height);
                             }
 
