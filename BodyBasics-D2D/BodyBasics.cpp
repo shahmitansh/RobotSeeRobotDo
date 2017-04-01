@@ -11,12 +11,22 @@
 
 /* LA HACKS */
 
+#include <string>
+
+// skeleton tracking
 #include "LimbSegment.h"
 #include "LimbCollection.h"
 #include "support.h"
-#include <string>
 #include <cctype>
 
+// arduino
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include "SerialPort.h"
+
+const int delayThresh = 20;
+int delayCount = 0;
 
 /* END */
 
@@ -364,12 +374,25 @@ void CBodyBasics::ProcessBody(INT64 nTime, int nBodyCount, IBody** ppBodies)
                         if (SUCCEEDED(hr))
                         {
 							// Start of LA Hacks Code
+							delayCount = (++delayCount % delayThresh);
 
-							Joint *jointArray[JointPart::NUM_JOINTS] = { &joints[4], &joints[5], &joints[6], &joints[8], &joints[9], &joints[10], &joints[1], &joints[20] };
+							if (delayCount == 0)
+							{
+								char *port_name = "\\\\.\\COM3";
 
-							LimbCollection myLimbs(jointArray);
+								//String for incoming data
+								char incomingData[MAX_DATA_LENGTH];
 
-							writeToFile(myLimbs.anglesToString());
+								SerialPort arduino(port_name);
+
+								Joint *jointArray[JointPart::NUM_JOINTS] = { &joints[4], &joints[5], &joints[6], &joints[8], &joints[9], &joints[10], &joints[1], &joints[20] };
+
+								LimbCollection myLimbs(jointArray);
+
+								if (arduino.isConnected()) arduino.writeMessage(myLimbs.anglesToString());
+
+							}
+							//writeToFile(myLimbs.anglesToString());
 
 							// End of LA Hacks Code
 

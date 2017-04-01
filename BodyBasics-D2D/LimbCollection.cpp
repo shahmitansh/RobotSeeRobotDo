@@ -70,7 +70,7 @@ int LimbCollection::angleOf(JointPart myJoint)
 
 std::string LimbCollection::anglesToString()
 {
-	std::string myAngles; // LS,LE,RS,RE
+	std::string myAngles;
 	
 	myAngles += std::to_string(this->angleOf(L_SHOULDER_JOINT)) + ","
 			+ std::to_string(this->angleOf(L_ELBOW_JOINT)) + ","

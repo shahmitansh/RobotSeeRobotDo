@@ -22,6 +22,7 @@
     <ClCompile Include="BodyBasics.cpp" />
     <ClCompile Include="LimbCollection.cpp" />
     <ClCompile Include="LimbSegment.cpp" />
+    <ClCompile Include="SerialPort.cpp" />
     <ClCompile Include="support.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -35,6 +36,7 @@
     <ClInclude Include="LimbCollection.h" />
     <ClInclude Include="LimbSegment.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="SerialPort.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="support.h" />
   </ItemGroup>
