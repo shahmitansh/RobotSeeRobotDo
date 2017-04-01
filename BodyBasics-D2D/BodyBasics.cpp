@@ -8,18 +8,16 @@
 #include <strsafe.h>
 #include "resource.h"
 #include "BodyBasics.h"
-#include "kinect.h"
 
-// LA Hack Inclusions
+/* LA HACKS */
 
-#include <iostream>
-#include <cctype>
+#include "LimbSegment.h"
+#include "support.h"
 #include <string>
+#include <cctype>
 
-#include <fstream>
-#include <ostream>
 
-//
+/* END */
 
 static const float c_JointThickness = 3.0f;
 static const float c_TrackedBoneThickness = 6.0f;
@@ -364,8 +362,18 @@ void CBodyBasics::ProcessBody(INT64 nTime, int nBodyCount, IBody** ppBodies)
                         hr = pBody->GetJoints(_countof(joints), joints);
                         if (SUCCEEDED(hr))
                         {
+
+							for (Joint joint : joints)
+							{
+								writeToFile(std::to_string(joint.Position.X));
+							}
+
                             for (int j = 0; j < _countof(joints); ++j)
                             {
+								Joint joint = joints[j];
+								writeToFile("Joint " + std::to_string(j) + " has xcoord " + std::to_string(joint.Position.X)
+								+ " and has ycoord " + std::to_string(joint.Position.Y));
+
                                 jointPoints[j] = BodyToScreen(joints[j].Position, width, height);
                             }
 

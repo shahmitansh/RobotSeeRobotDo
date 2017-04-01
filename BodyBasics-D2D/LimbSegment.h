@@ -1,31 +1,31 @@
 #ifndef LIMBSEGMENT_H
 #define LIMBSEGMENT_H
 
-class Joint;
+class LimbJoint;
 
 class LimbSegment
 {
 public:
 
-	LimbSegment(Joint* tail, Joint* head)
+	LimbSegment(LimbJoint* tail, LimbJoint* head)
 		: m_tail(tail), m_head(head)
 	{
 	
 	}
 
-	Joint* getJointTail()
+	LimbJoint* getJointTail()
 	{
 		return m_tail;
 	}
 
-	Joint* getJointHead()
+	LimbJoint* getJointHead()
 	{
 		return m_head;
 	}
 
 private:
-	Joint* m_tail;
-	Joint* m_head;
+	LimbJoint* m_tail;
+	LimbJoint* m_head;
 };
 
 #endif
