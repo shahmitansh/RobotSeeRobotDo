@@ -369,7 +369,7 @@ void CBodyBasics::ProcessBody(INT64 nTime, int nBodyCount, IBody** ppBodies)
 
 							LimbCollection myLimbs(jointArray);
 
-							myLimbs.saveAngles(JointPart::R_SHOULDER_JOINT);
+							writeToFile(myLimbs.anglesToString());
 
 							// End of LA Hacks Code
 

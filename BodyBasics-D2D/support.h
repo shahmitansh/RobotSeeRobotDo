@@ -7,6 +7,8 @@ enum BodyPart { L_LOWER_ARM, R_LOWER_ARM, L_UPPER_ARM, R_UPPER_ARM, TORSO, NUM_B
 
 enum JointPart { L_SHOULDER_JOINT, L_ELBOW_JOINT, L_WRIST_JOINT, R_SHOULDER_JOINT, R_ELBOW_JOINT, R_WRIST_JOINT, SPINE_MID, SPINE_SHOULDER, NUM_JOINTS };
 
+
+
 class LimbSegment;
 
 class Coord
@@ -46,6 +48,8 @@ Returns the angle between the two segments where the vectors are both oriented w
 the heads pointing away from the torso.
 */
 int angleBetweenLimbs(LimbSegment &left, LimbSegment &right);
+
+int adjustedAngle(int angle, std::pair<int, int> bounds);
 
 /*
 Writes msg to a debug.txt in debugging

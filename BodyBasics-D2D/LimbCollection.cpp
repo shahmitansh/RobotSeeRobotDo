@@ -3,6 +3,10 @@
 #include "support.h"
 #include <Kinect.h>
 
+std::pair<int, int> jointMobility_Elbow(30, 145);
+
+std::pair<int, int> jointMobility_Shoulder(35, 150);
+
 LimbCollection::LimbCollection(Joint * joints[])
 {
 	m_myLimbs = new LimbSegment*[NUM_BODYPARTS];
@@ -27,8 +31,6 @@ LimbCollection::LimbCollection(Joint * joints[])
 	m_myLimbs[BodyPart::TORSO] = new LimbSegment(BodyPart::TORSO, spineShoulder, spineMid);
 }
 
-
-
 LimbCollection::~LimbCollection()
 {
 	// deallocate values inside the array
@@ -46,16 +48,16 @@ int LimbCollection::angleOf(JointPart myJoint)
 	switch (myJoint)
 	{
 	case L_ELBOW_JOINT:
-		return angleBetweenLimbs(*m_myLimbs[BodyPart::L_UPPER_ARM], *m_myLimbs[BodyPart::L_LOWER_ARM]);
+		return adjustedAngle(angleBetweenLimbs(*m_myLimbs[BodyPart::L_UPPER_ARM], *m_myLimbs[BodyPart::L_LOWER_ARM]), jointMobility_Elbow);
 		break;
 	case R_ELBOW_JOINT:
-		return angleBetweenLimbs(*m_myLimbs[BodyPart::R_UPPER_ARM], *m_myLimbs[BodyPart::R_LOWER_ARM]);
+		return adjustedAngle(angleBetweenLimbs(*m_myLimbs[BodyPart::R_UPPER_ARM], *m_myLimbs[BodyPart::R_LOWER_ARM]), jointMobility_Elbow);
 		break;
 	case L_SHOULDER_JOINT:
-		return angleBetweenLimbs(*m_myLimbs[BodyPart::TORSO], *m_myLimbs[BodyPart::L_UPPER_ARM]);
+		return adjustedAngle(angleBetweenLimbs(*m_myLimbs[BodyPart::TORSO], *m_myLimbs[BodyPart::L_UPPER_ARM]), jointMobility_Shoulder);
 		break;
 	case R_SHOULDER_JOINT:
-		return angleBetweenLimbs(*m_myLimbs[BodyPart::TORSO], *m_myLimbs[BodyPart::R_UPPER_ARM]);
+		return adjustedAngle(angleBetweenLimbs(*m_myLimbs[BodyPart::TORSO], *m_myLimbs[BodyPart::R_UPPER_ARM]), jointMobility_Shoulder);
 		break;
 	case L_WRIST_JOINT:
 	case R_WRIST_JOINT:
@@ -64,6 +66,18 @@ int LimbCollection::angleOf(JointPart myJoint)
 		return -1;
 		break;
 	}
+}
+
+std::string LimbCollection::anglesToString()
+{
+	std::string myAngles; // LS,LE,RS,RE
+	
+	myAngles += std::to_string(this->angleOf(L_SHOULDER_JOINT)) + ","
+			+ std::to_string(this->angleOf(L_ELBOW_JOINT)) + ","
+			+ std::to_string(this->angleOf(R_SHOULDER_JOINT)) + ","
+			+ std::to_string(this->angleOf(L_ELBOW_JOINT));
+
+	return myAngles;
 }
 
 void LimbCollection::saveAngles(JointPart jnt)

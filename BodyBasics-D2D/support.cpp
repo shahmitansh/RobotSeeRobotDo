@@ -33,6 +33,16 @@ int angleBetweenLimbs(LimbSegment &left, LimbSegment &right)
 	return angle;
 }
 
+int adjustedAngle(int angle, std::pair<int, int> bounds)
+{
+	if (angle < bounds.first)
+		return bounds.first;
+	else if (angle > bounds.second)
+		return bounds.second;
+	else
+		return angle;
+}
+
 void writeToFile(std::string msg)
 {
 	std::ofstream myfile("rsrdTest.txt", std::fstream::app);

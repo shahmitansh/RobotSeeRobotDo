@@ -16,6 +16,8 @@ public:
 
 	int angleOf(JointPart myJoint);
 
+	std::string anglesToString();
+
 	void saveAngles(JointPart jnt);
 
 private:
