@@ -72,10 +72,15 @@ std::string LimbCollection::anglesToString()
 {
 	std::string myAngles;
 	
-	myAngles += std::to_string(this->angleOf(L_SHOULDER_JOINT)) + ","
-			+ std::to_string(this->angleOf(L_ELBOW_JOINT)) + ","
-			+ std::to_string(this->angleOf(R_SHOULDER_JOINT)) + ","
-			+ std::to_string(this->angleOf(L_ELBOW_JOINT));
+	std::string aLSJ = std::to_string(this->angleOf(L_SHOULDER_JOINT));
+	std::string aLEJ = std::to_string(this->angleOf(L_ELBOW_JOINT));
+	std::string aRSJ = std::to_string(this->angleOf(R_SHOULDER_JOINT));
+	std::string aREJ = std::to_string(this->angleOf(L_ELBOW_JOINT));
+	
+	(aLSJ.size() == 2) ? myAngles += "0" + aLSJ : myAngles += aLSJ;
+	(aLEJ.size() == 2) ? myAngles += "0" + aLEJ : myAngles += aLEJ;
+	(aRSJ.size() == 2) ? myAngles += "0" + aRSJ : myAngles += aRSJ;
+	(aREJ.size() == 2) ? myAngles += "0" + aREJ : myAngles += aREJ;
 
 	return myAngles;
 }

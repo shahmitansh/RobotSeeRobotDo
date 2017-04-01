@@ -391,8 +391,8 @@ void CBodyBasics::ProcessBody(INT64 nTime, int nBodyCount, IBody** ppBodies)
 
 								if (arduino.isConnected()) arduino.writeMessage(myLimbs.anglesToString());
 
+								//writeToFile(myLimbs.anglesToString());
 							}
-							//writeToFile(myLimbs.anglesToString());
 
 							// End of LA Hacks Code
 
