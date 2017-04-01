@@ -12,6 +12,7 @@
 /* LA HACKS */
 
 #include "LimbSegment.h"
+#include "LimbCollection.h"
 #include "support.h"
 #include <string>
 #include <cctype>
@@ -362,22 +363,18 @@ void CBodyBasics::ProcessBody(INT64 nTime, int nBodyCount, IBody** ppBodies)
                         hr = pBody->GetJoints(_countof(joints), joints);
                         if (SUCCEEDED(hr))
                         {
+							// Start of LA Hacks Code
 
-							for (Joint joint : joints)
-							{
-								writeToFile(std::to_string(joint.Position.X));
-							}
+							Joint *jointArray[JointPart::NUM_JOINTS] = { &joints[4], &joints[5], &joints[6], &joints[8], &joints[9], &joints[10] };
+
+							LimbCollection myLimbs(jointArray);
+
+							myLimbs.saveAngles(JointPart::L_ELBOW_JOINT);
+
+							// End of LA Hacks Code
 
                             for (int j = 0; j < _countof(joints); ++j)
-                            {
-								Joint joint = joints[j];
-								Coord r_wristCoord(joints[10].Position.X, joints[10].Position.Y);
-								Coord r_elbowCoord(joints[9].Position.X, joints[9].Position.Y);
-								Coord r_shoulderCoord(joints[8].Position.X, joints[8].Position.Y);
-								LimbSegment r_lowerArm(BodyPart::R_LOWER_ARM, r_elbowCoord, r_wristCoord);
-								LimbSegment r_upperArm(BodyPart::R_UPPER_ARM, r_shoulderCoord, r_elbowCoord);
-								writeToFile("Angle of right elbow is: " + std::to_string(angleBetweenLimbs(r_upperArm, r_lowerArm)));
-
+                            {				
                                 jointPoints[j] = BodyToScreen(joints[j].Position, width, height);
                             }
 

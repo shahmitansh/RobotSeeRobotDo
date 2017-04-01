@@ -3,6 +3,10 @@
 
 #include <string>
 
+enum BodyPart { L_LOWER_ARM, R_LOWER_ARM, L_UPPER_ARM, R_UPPER_ARM, NUM_BODYPARTS };
+
+enum JointPart { L_SHOULDER_JOINT, L_ELBOW_JOINT, L_WRIST_JOINT, R_SHOULDER_JOINT, R_ELBOW_JOINT, R_WRIST_JOINT, NUM_JOINTS };
+
 class LimbSegment;
 
 class Coord

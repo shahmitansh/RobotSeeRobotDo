@@ -3,8 +3,6 @@
 
 #include "support.h"
 
-enum BodyPart { L_LOWER_ARM, R_LOWER_ARM, L_UPPER_ARM, R_UPPER_ARM };
-
 class LimbSegment
 {
 public:

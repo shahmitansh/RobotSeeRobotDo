@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BodyBasics.cpp" />
+    <ClCompile Include="LimbCollection.cpp" />
     <ClCompile Include="LimbSegment.cpp" />
     <ClCompile Include="support.cpp" />
   </ItemGroup>
@@ -31,6 +32,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BodyBasics.h" />
+    <ClInclude Include="LimbCollection.h" />
     <ClInclude Include="LimbSegment.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
