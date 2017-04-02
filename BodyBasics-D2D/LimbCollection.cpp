@@ -1,6 +1,7 @@
 #include "LimbCollection.h"
 #include "LimbSegment.h"
 #include "support.h"
+#include <string>
 #include <Kinect.h>
 
 std::pair<int, int> jointMobility_Elbow(-180, 180);
@@ -141,4 +142,50 @@ bool LimbCollection::matches(std::string& configuration, int precision)
 		(abs(aLEJ_robot - aLEJ_player) <= precision) &&
 		(abs(aRSJ_robot - aRSJ_player) <= precision) &&
 		(abs(aREJ_robot - aREJ_player) <= precision));
+}
+
+std::string LimbCollection::getRobotAngle(JointPart jnt)
+{
+	std::pair<int, int> JointRange(30, 150);
+	
+	int angle = 0;
+
+	switch (jnt)
+	{
+		case L_ELBOW_JOINT:
+			angle = adjustedAngle(((this->angleOf(L_ELBOW_JOINT) + 90 / 2) / 90) * 90, JointRange);
+			if (angle < 100)
+				return (std::string("LE0") + std::to_string(angle));
+			else
+				return (std::string("LE") + std::to_string(angle));
+			break;
+		case R_ELBOW_JOINT:
+			angle = adjustedAngle(((this->angleOf(R_ELBOW_JOINT) + 90 / 2) / 90) * 90, JointRange);
+			if (angle < 100)
+				return (std::string("RE0") + std::to_string(angle));
+			else
+				return (std::string("RE") + std::to_string(angle));
+			break;
+		case L_SHOULDER_JOINT:
+			angle = adjustedAngle(((this->angleOf(L_SHOULDER_JOINT) + 30 / 2) / 30) * 30, JointRange);
+			if (angle < 100)
+				return (std::string("LS0") + std::to_string(angle));
+			else
+				return (std::string("LS") + std::to_string(angle));
+			break;
+		case R_SHOULDER_JOINT:
+			angle = adjustedAngle(((this->angleOf(R_SHOULDER_JOINT) + 30 / 2) / 30) * 30, JointRange);
+			if (angle < 100)
+				return std::string("RS0") + std::to_string(angle);
+			else
+				return std::string("RS") + std::to_string(angle);
+			break;
+		case L_WRIST_JOINT:
+		case R_WRIST_JOINT:
+		case NUM_JOINTS:
+		default:
+			return "None";
+			break;
+	}
+	return "None";
 }

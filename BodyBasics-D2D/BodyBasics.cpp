@@ -26,13 +26,15 @@
 #include "SerialPort.h"
 
 enum GameMode { MONKEY_SEE, MONKEY_DO };
-GameMode mode = MONKEY_DO;
+GameMode mode = MONKEY_SEE;
 
 const int delayThresh = 20;
 int delayCount = 0;
 
 int roboConfig = 0;
 int lastConfig = -1;
+
+std::string lastRS = "RS090", lastLS = "LS090", lastRE = "RE090", lastLE = "LE090";
 
 /* END */
 
@@ -426,54 +428,71 @@ void CBodyBasics::ProcessBody(INT64 nTime, int nBodyCount, IBody** ppBodies)
 										roboConfig = rand() % 4;
 									}
 								}
-								//if (arduino.isConnected()) {
-								//	arduino.writeMessage(std::to_string(roboConfig));
-								//	char output[MAX_DATA_LENGTH];
-								//	arduino.readSerialPort(output, MAX_DATA_LENGTH);
-								//	writeToFile(output);
-								//}
+								else if (mode == MONKEY_SEE)
+								{
+									Joint *jointArray[JointPart::NUM_JOINTS] = { &joints[4], &joints[5], &joints[6], &joints[8], &joints[9], &joints[10], &joints[1], &joints[20] };
 
-								
-								//writeToFile(myLimbs.anglesToString());
+									LimbCollection myLimbs(jointArray);
 
-								//Monkey see
-								//char *port_name = "\\\\.\\COM3";
+									char output[MAX_DATA_LENGTH];
 
-								//String for incoming data
-								//char incomingData[MAX_DATA_LENGTH];
+									/*Portname must contain these backslashes, and remember to
+									replace the following com port*/
+									char *port_name = "\\\\.\\COM4";
 
-								//SerialPort arduino(port_name);
+									//String for incoming data
+									char incomingData[MAX_DATA_LENGTH];
 
-								//if (arduino.isConnected()) arduino.writeMessage(myLimbs.anglesToString());
+									SerialPort arduino(port_name);
+									
+									if (arduino.isConnected()) {
+										std::string curLS = myLimbs.getRobotAngle(L_SHOULDER_JOINT);
+										if (curLS != lastLS)
+										{
+											char *c_string = new char[curLS.size() + 1];
+											std::copy(curLS.begin(), curLS.end(), c_string);
+											c_string[curLS.size()] = '\n';
+											arduino.writeSerialPort(c_string, MAX_DATA_LENGTH);
+											delete[] c_string;
+										}
 
-								//writeToFile(myLimbs.anglesToString());
-	
-								// Monkey do
-								
+										std::string curRS = myLimbs.getRobotAngle(R_SHOULDER_JOINT);
+										if (curRS != lastRS)
+										{
+											char *c_string = new char[curRS.size() + 1];
+											std::copy(curRS.begin(), curRS.end(), c_string);
+											c_string[curRS.size()] = '\n';
+											arduino.writeSerialPort(c_string, MAX_DATA_LENGTH);
+											delete[] c_string;
+										}
 
-								
-								//if (myLimbs.matches(configurations[roboConfig], 20))
-								//if (true)
-								//{
-								//	char *port_name = "\\\\.\\COM4";
+										std::string curRE = myLimbs.getRobotAngle(R_ELBOW_JOINT);
+										if (curRE != lastRE)
+										{
+											char *c_string = new char[curRE.size() + 1];
+											std::copy(curRE.begin(), curRE.end(), c_string);
+											c_string[curRE.size()] = '\n';
+											arduino.writeSerialPort(c_string, MAX_DATA_LENGTH);
+											delete[] c_string;
+										}
 
-								//	//String for incoming data
-								//	char incomingData[MAX_DATA_LENGTH];
+										std::string curLE = myLimbs.getRobotAngle(L_ELBOW_JOINT);
+										if (curLE != lastLE)
+										{
+											char *c_string = new char[curLE.size() + 1];
+											std::copy(curLE.begin(), curLE.end(), c_string);
+											c_string[curLE.size()] = '\n';
+											arduino.writeSerialPort(c_string, MAX_DATA_LENGTH);
+											delete[] c_string;
+										}
 
-								//	SerialPort arduino(port_name);
-								//	/*
-								//	roboConfig = (roboConfig++ % 4);
-								//	if (arduino.isConnected()) {
-								//		arduino.writeMessage(std::to_string(roboConfig));
-								//		writeToFile(std::to_string(roboConfig));
-								//	}
-								//	*/
-								//	//writeToFile("Matches!");
-								//}
-								//else
-								//{
-								//	writeToFile("Does not match!");
-								//}
+										lastLS = myLimbs.getRobotAngle(L_SHOULDER_JOINT);
+										lastRS = myLimbs.getRobotAngle(R_SHOULDER_JOINT);
+										lastLE = myLimbs.getRobotAngle(L_ELBOW_JOINT);
+										lastRE = myLimbs.getRobotAngle(R_ELBOW_JOINT);
+									}
+
+								}
 							}
 
 							// End of LA Hacks Code
