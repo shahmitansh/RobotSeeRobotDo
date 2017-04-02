@@ -1,13 +1,9 @@
-﻿  LimbCollection.cpp
-  BodyBasics.cpp
-c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.10.25017\include\xutility(2350): warning C4996: 'std::copy::_Unchecked_iterators::_Deprecate': Call to 'std::copy' with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
-  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.10.25017\include\xutility(2350): note: see declaration of 'std::copy::_Unchecked_iterators::_Deprecate'
-  c:\users\dionigi\desktop\la hacks\robotseerobotdo\bodybasics-d2d\bodybasics.cpp(415): note: see reference to function template instantiation '_OutIt *std::copy<std::_String_iterator<std::_String_val<std::_Simple_types<char>>>,char*>(_InIt,_InIt,_OutIt)' being compiled
-          with
-          [
-              _OutIt=char *,
-              _InIt=std::_String_iterator<std::_String_val<std::_Simple_types<char>>>
-          ]
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(387,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (BodyBasics-D2D.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  LimbCollection.cpp
   Generating Code...
-  BodyBasics-D2D.vcxproj -> C:\Users\Dionigi\Desktop\LA Hacks\RobotSeeRobotDo\BodyBasics-D2D\Debug\BodyBasics-D2D.exe
-  BodyBasics-D2D.vcxproj -> C:\Users\Dionigi\Desktop\LA Hacks\RobotSeeRobotDo\BodyBasics-D2D\Debug\BodyBasics-D2D.pdb (Partial PDB)
+  Skipping... (no relevant changes detected)
+  support.cpp
+  SerialPort.cpp
+  LimbSegment.cpp
+  BodyBasics-D2D.vcxproj -> C:\Users\Dionigi\Desktop\LA Hacks\RobotSeeRobotDo\BodyBasics-D2D\Debug\MonkeySeeMonkeyDo.exe
+  BodyBasics-D2D.vcxproj -> C:\Users\Dionigi\Desktop\LA Hacks\RobotSeeRobotDo\BodyBasics-D2D\Debug\MonkeySeeMonkeyDo.pdb (Partial PDB)

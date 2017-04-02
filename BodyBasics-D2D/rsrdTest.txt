@@ -1,50 +1,44 @@
-LS030
-LS030
-LS060
-LS060
-LS060
-LS090
-LS150
-LS030
-LS090
-LS060
-LS060
-LS060
-LS030
-LS090
-LS060
-LS030
-LS030
-LS030
-LS060
-LS060
-LS030
-LS060
-LS090
-LS090
-LS060
-LS060
-LS060
-LS060
-LS060
-LS060
-LS030
-LS030
-LS060
-LS060
-LS060
-LS060
-LS030
-LS060
-LS060
-LS060
-LS090
-LS060
-LS060
-LS060
-LS060
-LS060
-LS030
-LS030
-LS030
-LS030
+RElbow is: 30
+LElbow is: 30
+LElbow is: 30
+RElbow is: 30
+RElbow is: 30
+LElbow is: 30
+LElbow is: 30
+RElbow is: 30
+RElbow is: 30
+LElbow is: 30
+LElbow is: 30
+RElbow is: 30
+RElbow is: 30
+LElbow is: 30
+LElbow is: 30
+RElbow is: 30
+RElbow is: 30
+LElbow is: 30
+LElbow is: 30
+RElbow is: 30
+RElbow is: 30
+LElbow is: 30
+LElbow is: 30
+RElbow is: 30
+RElbow is: 30
+LElbow is: 30
+LElbow is: 30
+RElbow is: 30
+RElbow is: 90
+LElbow is: 90
+LElbow is: 90
+RElbow is: 90
+RElbow is: 90
+LElbow is: 90
+LElbow is: 90
+RElbow is: 90
+RElbow is: 90
+LElbow is: 90
+LElbow is: 90
+RElbow is: 90
+RElbow is: 30
+LElbow is: 30
+LElbow is: 30
+RElbow is: 30

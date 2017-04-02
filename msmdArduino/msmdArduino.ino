@@ -2,9 +2,7 @@
 #define BAUD 9600
 
 Servo leftArma, leftArmb, leftArmc, rightArma, rightArmb, rightArmc;
-int state;
-int ctr = 0;
-int input[] = {0, 1, 1, 2, 2, 3, 4};
+//int input[] = {0, 1, 1, 2, 2, 3, 4};
 
 String MODE = "MONKEY_SEE";
 
@@ -18,12 +16,12 @@ void setup()
   }
   else if (MODE == "MONKEY_D0")
   {
-    leftArma.attach(9);
     leftArmb.attach(8);
+    leftArma.attach(9);
     leftArmc.attach(10);
-    rightArma.attach(6);
+    rightArma.attach(7);    
+    rightArmb.attach(6);
     rightArmc.attach(5);
-    rightArmb.attach(7);    
   }
 }
 
@@ -136,7 +134,7 @@ void loop()
       rightArmb.attach(7);
       if(joint.equals("RE030"))
       {
-        rightArmb.write(30);
+        rightArmb.write(150);
         delay(250);
         rightArmb.detach();
       }
@@ -148,7 +146,7 @@ void loop()
       }
       if(joint.equals("RE150"))
       {
-        rightArmb.write(150);
+        rightArmb.write(30);
         delay(250);
         rightArmb.detach();
       }
