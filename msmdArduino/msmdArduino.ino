@@ -1,15 +1,14 @@
 #include <Servo.h> 
 #define BAUD 9600
 
-Servo leftArma, leftArmb, leftArmc, rightArma, rightArmb, rightArmc;
-//int input[] = {0, 1, 1, 2, 2, 3, 4};
+Servo leftArma, leftArmb, leftArmc, rightArma, rightArmb, rightArmc, leftHip, rightHip;
 
-String MODE = "MONKEY_PARTY";
+String MODE = "MONKEY_SEE";
 
 void setup() 
 {
   Serial.begin(BAUD);
-  if (MODE == "MONKEY_SEE")
+  if (MODE == "MONKEY_PARTY")
   {
     leftArmc.attach(10);
     rightArmc.attach(5);
@@ -27,6 +26,8 @@ void setup()
 
 void loop() 
 { 
+  leftArma.writeMicroseconds(1500);
+  rightArma.write(90);
   if (MODE == "MONKEY_SEE")
   {
     String input;
@@ -160,7 +161,7 @@ void loop()
       input = Serial.readStringUntil('\n');
     }
     delay(100);
-    if(input == "0")
+    if(input.toInt() == 0)
     {
       leftArmc.write(90);
       rightArmc.write(90);
@@ -171,7 +172,7 @@ void loop()
       //Serial.print(leftArma.read());
       delay(250);
      }
-     else if(input == "1")
+     else if(input.toInt() == 1)
      {
        leftArmc.write(90);
        rightArmc.write(90);
@@ -181,7 +182,7 @@ void loop()
        leftArmb.write(90);
        delay(250);
      }
-     else if(input == "2")
+     else if(input.toInt() == 2)
      {
        leftArmc.write(90);
        rightArmc.write(90);    
@@ -191,7 +192,7 @@ void loop()
        leftArmb.write(60);
        delay(250);
      }
-     else if(input == "3")
+     else if(input.toInt() == 3)
      {
        leftArmc.write(90);
        rightArmc.write(90);
@@ -203,9 +204,9 @@ void loop()
      }
      else
      {}
-    delay(100); 
+      delay(100); 
   }
-  else if (MODE == "MONKEY_PARTY")
+  else if (MODE == "MONKEY_SEE")
   {
     String input;
     //If any input is detected in arduino
@@ -262,7 +263,80 @@ void loop()
         rightArmb.write(120); // clockwise
         leftArma.write(120);
         leftArmb.write(90); // clockwise
+        break; 
+      case 7:
+        leftArmc.write(90);
+        rightArmc.write(90);
+        for(int j=0; j<5; j++){
+          for (int i = 30; i<150; i++){
+            rightArma.write(i);
+            delay(15);  
+            leftArma.write(i);
+            delay(15);
+          for(i=150; i>0; i--){
+            rightArma.write(i);
+            delay(15);  
+            leftArma.write(i);
+            delay(15);
+            }
+          }    
+        }
+        rightArmb.write(90); // clockwise
+        leftArmb.write(90); // clockwise
         break;
+      case 8:
+        for(int i=0; i<5; i++){
+          rightArmc.write(90);
+          leftArmc.write(90);
+          for(int j = 50; j<130; j++){
+            rightArma.write(j);
+            rightArmb.write(j); // clockwise
+            leftArma.write(j);
+            leftArmb.write(j); // clockwise
+            delay(15);  
+          }
+          for(int j = 130; j>50; j--){
+            rightArma.write(120);
+            rightArmb.write(120); // clockwise
+            leftArma.write(120);
+            leftArmb.write(120); // clockwise
+            delay(20);    
+          }
+        }
+        break;
+      case 9:
+        rightArmc.write(45);
+        rightArma.write(45);
+        rightArmb.write(90); // clockwise
+        leftArmc.write(75);
+        leftArma.write(45);
+        leftArmb.write(120); // clockwise
+        delay(5000);
+        /*
+        rightHip.attach(12);
+        leftHip.attach(3);
+        for(int i=90; i>45; i--){
+          rightHip.write(i);
+          leftHip.write(i);
+          delay(30);
+        }
+        delay(300);
+        */
+        break;
+      case 10:
+        rightArmc.write(75);
+        rightArma.write(40);
+        rightArmb.write(150); // clockwise
+        leftArmc.write(80);
+        leftArma.write(45);
+        leftArmb.write(120); // clockwise
+        rightArmc.detach();
+        rightArma.detach();
+        rightArmb.detach();
+        leftArmc.detach();
+        leftArma.detach();
+        leftArmb.detach();
+        delay(10000);
       default:
         return;
     }

@@ -26,7 +26,7 @@
 #include "SerialPort.h"
 
 enum GameMode { MONKEY_SEE, MONKEY_DO, MONKEY_PARTY };
-GameMode mode = MONKEY_PARTY;
+GameMode mode = MONKEY_SEE;
 
 const int delayThresh = 20;
 int delayCount = 0;
@@ -395,7 +395,7 @@ void CBodyBasics::ProcessBody(INT64 nTime, int nBodyCount, IBody** ppBodies)
 										"+090+090+090+090",
 										"+170-025+040-070",
 										"+090+035+055-000",
-										"+100+110+110+010"
+										"+100+110+110+010",
 									};
 
 									char output[MAX_DATA_LENGTH];
@@ -426,7 +426,9 @@ void CBodyBasics::ProcessBody(INT64 nTime, int nBodyCount, IBody** ppBodies)
 
 									LimbCollection myLimbs(jointArray);
 
-									if (myLimbs.matches(configurations[roboConfig], 30)) {
+									//writeToFile(myLimbs.anglesToString());
+
+									if (myLimbs.matches(configurations[roboConfig], 60)) {
 										roboConfig = rand() % 4;
 									}
 								}
@@ -512,16 +514,15 @@ void CBodyBasics::ProcessBody(INT64 nTime, int nBodyCount, IBody** ppBodies)
 
 									SerialPort arduino(port_name);
 
-						
-										std::string input_string = std::to_string(danceNum);
-										char *c_string = new char[input_string.size() + 1];
-										std::copy(input_string.begin(), input_string.end(), c_string);
-										c_string[input_string.size()] = '\n';
-										arduino.writeSerialPort(c_string, MAX_DATA_LENGTH);
-										delete[] c_string;
-									
+									std::string input_string = std::to_string(danceNum);
+									char *c_string = new char[input_string.size() + 1];
+									std::copy(input_string.begin(), input_string.end(), c_string);
+									c_string[input_string.size()] = '\n';
+									arduino.writeSerialPort(c_string, MAX_DATA_LENGTH);
+									delete[] c_string;
 
-									danceNum = (danceNum + 1) % 7;
+									danceNum = (danceNum + 1) % 10;
+									
 								}
 							}
 
