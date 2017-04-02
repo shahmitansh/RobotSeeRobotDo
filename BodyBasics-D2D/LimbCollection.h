@@ -20,6 +20,8 @@ public:
 
 	void saveAngles(JointPart jnt);
 
+	bool matches(std::string& configuration, int precision);
+
 private:
 	// array of pointers to limbs as there is no default constructor
 	LimbSegment **m_myLimbs;

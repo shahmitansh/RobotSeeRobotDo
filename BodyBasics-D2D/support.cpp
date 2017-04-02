@@ -26,10 +26,16 @@ int angleBetweenLimbs(LimbSegment &left, LimbSegment &right)
 	Coord u(left.end().X() - left.start().X(), left.end().Y() - left.start().Y());
 	Coord v(right.end().X() - right.start().X(), right.end().Y() - right.start().Y());
 
+	// magnitude of angle calculation
 	float magU = magnitude(u);
 	float magV = magnitude(v);
 	float dotProd = dotProduct(u, v);
 	int angle = (180 / 3.14159265) * acosf(dotProd / (magU * magV));
+
+	// sign of angle calculation
+	int sign = ((v.Y() / magV) < (u.Y() / magU)) ? -1 : 1;
+	angle *= sign;
+
 	return angle;
 }
 

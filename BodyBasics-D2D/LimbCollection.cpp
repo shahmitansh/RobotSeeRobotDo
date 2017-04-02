@@ -3,9 +3,9 @@
 #include "support.h"
 #include <Kinect.h>
 
-std::pair<int, int> jointMobility_Elbow(30, 145);
+std::pair<int, int> jointMobility_Elbow(-180, 180);
 
-std::pair<int, int> jointMobility_Shoulder(35, 150);
+std::pair<int, int> jointMobility_Shoulder(-180, 180);
 
 LimbCollection::LimbCollection(Joint * joints[])
 {
@@ -72,15 +72,30 @@ std::string LimbCollection::anglesToString()
 {
 	std::string myAngles;
 	
-	std::string aLSJ = std::to_string(this->angleOf(L_SHOULDER_JOINT));
-	std::string aLEJ = std::to_string(this->angleOf(L_ELBOW_JOINT));
-	std::string aRSJ = std::to_string(this->angleOf(R_SHOULDER_JOINT));
-	std::string aREJ = std::to_string(this->angleOf(L_ELBOW_JOINT));
+	int aLSJ = this->angleOf(L_SHOULDER_JOINT);
+	int aLEJ = this->angleOf(L_ELBOW_JOINT);
+	int aRSJ = this->angleOf(R_SHOULDER_JOINT);
+	int aREJ = this->angleOf(R_ELBOW_JOINT);
+
+	if (aLSJ < 0) myAngles += "-"; else myAngles += "+";
+	if (abs(aLSJ) < 10) myAngles += "00" + std::to_string(abs(aLSJ));
+	else if (abs(aLSJ) < 100) myAngles += "0" + std::to_string(abs(aLSJ));
+	else myAngles += std::to_string(abs(aLSJ));
+
+	if (aLEJ < 0) myAngles += "-"; else myAngles += "+";
+	if (abs(aLEJ) < 10) myAngles += "00" + std::to_string(abs(aLEJ));
+	else if (abs(aLEJ) < 100) myAngles += "0" + std::to_string(abs(aLEJ));
+	else myAngles += std::to_string(abs(aLEJ));
 	
-	(aLSJ.size() == 2) ? myAngles += "0" + aLSJ : myAngles += aLSJ;
-	(aLEJ.size() == 2) ? myAngles += "0" + aLEJ : myAngles += aLEJ;
-	(aRSJ.size() == 2) ? myAngles += "0" + aRSJ : myAngles += aRSJ;
-	(aREJ.size() == 2) ? myAngles += "0" + aREJ : myAngles += aREJ;
+	if (aRSJ < 0) myAngles += "-"; else myAngles += "+";
+	if (abs(aRSJ) < 10) myAngles += "00" + std::to_string(abs(aRSJ));
+	else if (abs(aRSJ) < 100) myAngles += "0" + std::to_string(abs(aRSJ));
+	else myAngles += std::to_string(abs(aRSJ));
+	
+	if (aREJ < 0) myAngles += "-"; else myAngles += "+";
+	if (abs(aREJ) < 10) myAngles += "00" + std::to_string(abs(aREJ));
+	else if (abs(aREJ) < 100) myAngles += "0" + std::to_string(abs(aREJ));
+	else myAngles += std::to_string(abs(aREJ));
 
 	return myAngles;
 }
@@ -107,4 +122,22 @@ void LimbCollection::saveAngles(JointPart jnt)
 	default:
 		break;
 	}
+}
+
+bool LimbCollection::matches(std::string& configuration, int precision)
+{
+	int aLSJ_player = this->angleOf(L_SHOULDER_JOINT);
+	int aLEJ_player = this->angleOf(L_ELBOW_JOINT);
+	int aRSJ_player = this->angleOf(R_SHOULDER_JOINT);
+	int aREJ_player = this->angleOf(L_ELBOW_JOINT);
+
+	int aLSJ_robot = stoi(configuration.substr(0, 4));
+	int aLEJ_robot = stoi(configuration.substr(4, 4));
+	int aRSJ_robot = stoi(configuration.substr(8, 4));
+	int aREJ_robot = stoi(configuration.substr(12, 4));
+
+	return ((abs(aLSJ_robot - aLSJ_player) <= precision) &&
+		(abs(aLEJ_robot - aLEJ_player) <= precision) &&
+		(abs(aRSJ_robot - aRSJ_player) <= precision) &&
+		(abs(aREJ_robot - aREJ_player) <= precision));
 }
