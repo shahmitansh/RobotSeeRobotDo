@@ -25,10 +25,14 @@
 #include <stdlib.h>
 #include "SerialPort.h"
 
+enum GameMode { MONKEY_SEE, MONKEY_DO };
+GameMode mode = MONKEY_DO;
+
 const int delayThresh = 20;
 int delayCount = 0;
 
 int roboConfig = 0;
+int lastConfig = -1;
 
 /* END */
 
@@ -382,42 +386,46 @@ void CBodyBasics::ProcessBody(INT64 nTime, int nBodyCount, IBody** ppBodies)
 
 							if (delayCount == 0)
 							{
+								if (mode == MONKEY_DO) {
+									std::string configurations[4] = {
+										"+090+090+090+090",
+										"+170-025+040-070",
+										"+090+035+055-000",
+										"+100+110+110+010"
+									};
 
-								std::string configurations[4] = {
-									"+090+090+090+090",
-									"+090-090+090+090",
-									"+000+100+100+100",
-									"+090+090+090-090"
-								};
+									char output[MAX_DATA_LENGTH];
 
-								char output[MAX_DATA_LENGTH];
+									/*Portname must contain these backslashes, and remember to
+									replace the following com port*/
+									char *port_name = "\\\\.\\COM4";
 
-								/*Portname must contain these backslashes, and remember to
-								replace the following com port*/
-								char *port_name = "\\\\.\\COM4";
+									//String for incoming data
+									char incomingData[MAX_DATA_LENGTH];
 
-								//String for incoming data
-								char incomingData[MAX_DATA_LENGTH];
+									SerialPort arduino(port_name);
+									if (lastConfig != roboConfig)
+									{
+										roboConfig = rand() % 4;
+										if (arduino.isConnected()) {
+											std::string input_string = std::to_string(roboConfig);
+											char *c_string = new char[input_string.size() + 1];
+											std::copy(input_string.begin(), input_string.end(), c_string);
+											c_string[input_string.size()] = '\n';
+											arduino.writeSerialPort(c_string, MAX_DATA_LENGTH);
+											delete[] c_string;
+										}
+										lastConfig = roboConfig;
+									}
 
-								SerialPort arduino(port_name);
+									Joint *jointArray[JointPart::NUM_JOINTS] = { &joints[4], &joints[5], &joints[6], &joints[8], &joints[9], &joints[10], &joints[1], &joints[20] };
 
-								roboConfig = (roboConfig++ % 4);
+									LimbCollection myLimbs(jointArray);
 
-								if (arduino.isConnected()) {
-									std::string input_string = std::to_string(4);
-									writeToFile("Input " + input_string);
-									char *c_string = new char[input_string.size() + 1];
-									std::copy(input_string.begin(), input_string.end(), c_string);
-									c_string[input_string.size()] = '\n';
-									arduino.writeSerialPort(c_string, MAX_DATA_LENGTH);
-									writeToFile("C_string: ");
-									writeToFile(c_string);
-									delete[] c_string;
-									
+									if (myLimbs.matches(configurations[roboConfig], 30)) {
+										roboConfig = rand() % 4;
+									}
 								}
-
-
-
 								//if (arduino.isConnected()) {
 								//	arduino.writeMessage(std::to_string(roboConfig));
 								//	char output[MAX_DATA_LENGTH];
@@ -425,9 +433,6 @@ void CBodyBasics::ProcessBody(INT64 nTime, int nBodyCount, IBody** ppBodies)
 								//	writeToFile(output);
 								//}
 
-								Joint *jointArray[JointPart::NUM_JOINTS] = { &joints[4], &joints[5], &joints[6], &joints[8], &joints[9], &joints[10], &joints[1], &joints[20] };
-
-								LimbCollection myLimbs(jointArray);
 								
 								//writeToFile(myLimbs.anglesToString());
 

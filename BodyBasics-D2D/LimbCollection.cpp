@@ -126,10 +126,11 @@ void LimbCollection::saveAngles(JointPart jnt)
 
 bool LimbCollection::matches(std::string& configuration, int precision)
 {
-	int aLSJ_player = this->angleOf(L_SHOULDER_JOINT);
-	int aLEJ_player = this->angleOf(L_ELBOW_JOINT);
-	int aRSJ_player = this->angleOf(R_SHOULDER_JOINT);
-	int aREJ_player = this->angleOf(L_ELBOW_JOINT);
+	std::string myAngles = this->anglesToString();
+	int aLSJ_player = stoi(myAngles.substr(0, 4));
+	int aLEJ_player = stoi(myAngles.substr(4, 4));
+	int aRSJ_player = stoi(myAngles.substr(8, 4));
+	int aREJ_player = stoi(myAngles.substr(12, 4));
 
 	int aLSJ_robot = stoi(configuration.substr(0, 4));
 	int aLEJ_robot = stoi(configuration.substr(4, 4));
