@@ -154,7 +154,7 @@ std::string LimbCollection::getRobotAngle(JointPart jnt)
 	{
 		case L_ELBOW_JOINT:
 			angle = adjustedAngle(((this->angleOf(L_ELBOW_JOINT) + 90 / 2) / 90) * 90, JointRange);
-			writeToFile("LElbow is: " + std::to_string(angle));
+			writeToFile("LElbow is: " + std::to_string(this->angleOf(L_ELBOW_JOINT)));
 			if (angle < 100)
 				return (std::string("LE0") + std::to_string(angle));
 			else
@@ -162,7 +162,7 @@ std::string LimbCollection::getRobotAngle(JointPart jnt)
 			break;
 		case R_ELBOW_JOINT:
 			angle = adjustedAngle(((this->angleOf(R_ELBOW_JOINT) + 90 / 2) / 90) * 90, JointRange);
-			writeToFile("RElbow is: " + std::to_string(angle));
+			writeToFile("RElbow is: " + std::to_string(this->angleOf(R_ELBOW_JOINT)));
 			if (angle < 100)
 				return (std::string("RE0") + std::to_string(angle));
 			else

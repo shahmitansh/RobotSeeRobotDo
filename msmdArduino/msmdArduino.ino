@@ -4,7 +4,7 @@
 Servo leftArma, leftArmb, leftArmc, rightArma, rightArmb, rightArmc;
 //int input[] = {0, 1, 1, 2, 2, 3, 4};
 
-String MODE = "MONKEY_SEE";
+String MODE = "MONKEY_PARTY";
 
 void setup() 
 {
@@ -14,7 +14,7 @@ void setup()
     leftArmc.attach(10);
     rightArmc.attach(5);
   }
-  else if (MODE == "MONKEY_D0")
+  else if (MODE == "MONKEY_D0" || MODE == "MONKEY_PARTY")
   {
     leftArmb.attach(8);
     leftArma.attach(9);
@@ -204,5 +204,68 @@ void loop()
      else
      {}
     delay(100); 
+  }
+  else if (MODE == "MONKEY_PARTY")
+  {
+    String input;
+    //If any input is detected in arduino
+    if(Serial.available() > 0){
+      input = Serial.readStringUntil('\n');
+    }
+    int danceNum = input.toInt();
+    switch (danceNum)
+    {
+      case 1:
+        leftArmc.write(90);
+        rightArmc.write(90);
+        rightArma.write(90);
+        rightArmb.write(120); // clockwise
+        leftArma.write(90);
+        leftArmb.write(30); // clockwise
+        break;
+      case 2:
+        leftArmc.write(90);
+        rightArmc.write(90);
+        rightArma.write(90);
+        rightArmb.write(30); // clockwise
+        leftArma.write(90);
+        leftArmb.write(120); // clockwise
+        break;
+      case 3:
+        leftArmc.write(90);
+        rightArmc.write(90);
+        rightArma.write(60);
+        rightArmb.write(90); // clockwise
+        leftArma.write(130);
+        leftArmb.write(45); // clockwise
+        break;
+      case 4:
+        leftArmc.write(90);
+        rightArmc.write(90);
+        rightArma.write(150);
+        rightArmb.write(90); // clockwise
+        leftArma.write(90);
+        leftArmb.write(150); // clockwise
+        break;
+      case 5:
+        leftArmc.write(90);
+        rightArmc.write(90);
+        rightArma.write(30);
+        rightArmb.write(90); // clockwise
+        leftArma.write(90);
+        leftArmb.write(0); // clockwise
+        break;
+      case 6:
+        leftArmc.write(90);
+        rightArmc.write(90);
+        rightArma.write(135);
+        rightArmb.write(120); // clockwise
+        leftArma.write(120);
+        leftArmb.write(90); // clockwise
+        break;
+      default:
+        return;
+    }
+    delay(1500);
   }
 }

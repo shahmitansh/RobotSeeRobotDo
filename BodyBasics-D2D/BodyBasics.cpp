@@ -25,8 +25,8 @@
 #include <stdlib.h>
 #include "SerialPort.h"
 
-enum GameMode { MONKEY_SEE, MONKEY_DO };
-GameMode mode = MONKEY_SEE;
+enum GameMode { MONKEY_SEE, MONKEY_DO, MONKEY_PARTY };
+GameMode mode = MONKEY_PARTY;
 
 const int delayThresh = 20;
 int delayCount = 0;
@@ -35,6 +35,8 @@ int roboConfig = 0;
 int lastConfig = -1;
 
 std::string lastRS = "RS090", lastLS = "LS090", lastRE = "RE090", lastLE = "LE090";
+
+int danceNum = 0;
 
 /* END */
 
@@ -492,6 +494,34 @@ void CBodyBasics::ProcessBody(INT64 nTime, int nBodyCount, IBody** ppBodies)
 										lastRE = myLimbs.getRobotAngle(R_ELBOW_JOINT);
 									}
 
+								}
+								else if (mode == MONKEY_PARTY)
+								{
+									Joint *jointArray[JointPart::NUM_JOINTS] = { &joints[4], &joints[5], &joints[6], &joints[8], &joints[9], &joints[10], &joints[1], &joints[20] };
+
+									LimbCollection myLimbs(jointArray);
+
+									char output[MAX_DATA_LENGTH];
+
+									/*Portname must contain these backslashes, and remember to
+									replace the following com port*/
+									char *port_name = "\\\\.\\COM4";
+
+									//String for incoming data
+									char incomingData[MAX_DATA_LENGTH];
+
+									SerialPort arduino(port_name);
+
+						
+										std::string input_string = std::to_string(danceNum);
+										char *c_string = new char[input_string.size() + 1];
+										std::copy(input_string.begin(), input_string.end(), c_string);
+										c_string[input_string.size()] = '\n';
+										arduino.writeSerialPort(c_string, MAX_DATA_LENGTH);
+										delete[] c_string;
+									
+
+									danceNum = (danceNum + 1) % 7;
 								}
 							}
 
